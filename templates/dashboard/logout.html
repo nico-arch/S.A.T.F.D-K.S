@@ -1,0 +1,61 @@
+{% extends 'dashboard/partials/base.html' %}
+{% block title %}access denied page{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<!-- [ Main Content ] start -->
+  <section class="pcoded-main-container">
+      <div class="pcoded-wrapper">
+          <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                  <!-- [ breadcrumb ] start -->
+                  <div class="page-header">
+                      <div class="page-block">
+                          <div class="row align-items-center">
+                              <div class="col-md-12">
+
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- [ breadcrumb ] end -->
+                  <div class="main-body">
+                      <div class="page-wrapper">
+                          <!-- [ Main Content ] start -->
+                          <div class="row">
+
+                            <!-- [ Typography ] start -->
+
+                               <div  class="col-sm-12">
+                                   <div class="card">
+                                     <div class="card-header" style="background-color:red">
+                                         <h3 style="color:white">Voulez-vous vous déconnecter ?</h3>
+                                     </div>
+
+
+
+                                     <form class=""  method="POST">
+                                       {% csrf_token %}
+                                       <div class="card-body">
+                                         <a href="{{ request.META.HTTP_REFERER }}"  class="btn btn-primary btn-sm">Retour</a>
+                                         <button type="submit" class="btn btn-danger btn-sm">Se déconnecter</button>
+                                       </div>
+                                     </form>
+                                   </div>
+                               </div>
+                               <!-- [ Typography ] end -->
+
+
+                          </div>
+                          <!-- [ Main Content ] end -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- [ Main Content ] end -->
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import *
-from .form_models import *
+# from .form_models import *
 import uuid
 from django.utils import timezone
 # Create your models here.
@@ -9,30 +9,7 @@ from django.utils import timezone
 
 class Personne(models.Model):
     id = models.AutoField(primary_key = True)
-    
-    
-    cin_nif_niu        = models.CharField('CIN/NIF/NIU',max_length=254, unique=True, default ='', null =True)
-    # nationalite = models.CharField(max_length=500, default ='', null =True)
 
-    sexe = models.CharField('Sexe',
-                                   max_length=50,
-                                   choices=sexe_Type,
-                                   null=True)
-    date_de_naissance   = models.DateField('Date de naissance',
-                              default=datetime.now, blank=True
-                              #null= False,
-                              #blank=False
-                              )
-    date_d_embauche   = models.DateField("Date d'embauche",
-                              default=datetime.now, blank=True
-                              #default=timezone.now,
-                              #null= False,
-                              #blank=False
-                              )
-    phone = models.CharField(max_length=500, null=True, default = "")
-    address = models.CharField(max_length=500, default ='--------', null =True)
-    salaire = models.FloatField(null=True)
-    isActive = models.BooleanField(null = True)
 
     date_created = models.DateField(
                               default=datetime.now, blank=True
@@ -60,30 +37,8 @@ class Personne(models.Model):
 
 class Station_lieu_de_travail(models.Model):
     id = models.AutoField(primary_key = True)
-    
-    
-    cin_nif_niu        = models.CharField('CIN/NIF/NIU',max_length=254, unique=True, default ='', null =True)
-    nationalite = models.CharField(max_length=500, default ='', null =True)
 
-    sexe = models.CharField('Sexe',
-                                   max_length=50,
-                                   choices=sexe_Type,
-                                   null=True)
-    date_de_naissance   = models.DateField('Date de naissance',
-                              default=datetime.now, blank=True
-                              #null= False,
-                              #blank=False
-                              )
-    date_d_embauche   = models.DateField("Date d'embauche",
-                              default=datetime.now, blank=True
-                              #default=timezone.now,
-                              #null= False,
-                              #blank=False
-                              )
-    phone = models.CharField(max_length=500, null=True, default = "")
-    address = models.CharField(max_length=500, default ='--------', null =True)
-    salaire = models.FloatField(null=True)
-    isActive = models.BooleanField(null = True)
+
 
     date_created = models.DateField(
                               default=datetime.now, blank=True
@@ -106,8 +61,3 @@ class Station_lieu_de_travail(models.Model):
 
     def __str__(self):
         return '{0}'.format(self.user)
-
-
-
-
-

@@ -56,7 +56,7 @@ ROOT_URLCONF = 'django_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -101,13 +101,53 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#For MySql
+# DATABASES = {
+# 'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': 'username_yourdbname',#database name
+#     'HOST': 'localhost',
+#     'PORT': '3306',
+#     'USER': 'username_yourdbusername',
+#     'PASSWORD': 'youruserpassword',
+#     'OPTIONS': {
+#             'sql_mode': 'STRICT_ALL_TABLES',
+#         },
+# }}
+
+#For for PostgreSQL
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'username_yourdbname',
+#         'USER': 'username_yourdbusername',
+#         'PASSWORD': 'youruserpassword',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+########################################################
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'inventory',
+#        'USERNAME': 'root',
+#        'HOST': 'localhost',
+#        'PORT': 3306,
+#        'PASSWORD': '',  # Your Password
+#    }
+# }
+
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Port-au-Prince'
 
 USE_I18N = True
 
@@ -120,8 +160,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    #BASE_DIR / "static_files",
+]
+STATIC_ROOT = (BASE_DIR/"static_files/")
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND =("django.core.mail.backends.console.EmailBackend")
+# Bottom of the file
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = '' #smtp.gmail.com
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''

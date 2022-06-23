@@ -1,0 +1,109 @@
+{% extends 'dashboard/partials/base.html' %}
+{% block title %}Account details{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<!-- [ Main Content ] start -->
+  <section class="pcoded-main-container" >
+      <div class="pcoded-wrapper">
+          <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                  <!-- [ breadcrumb ] start -->
+                  <div class="page-header">
+                      <div class="page-block">
+                          <div class="row align-items-center">
+                              <div class="col-md-12">
+
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- [ breadcrumb ] end -->
+                  <div class="main-body" id="to_print">
+                      <div class="page-wrapper">
+                          <!-- [ Main Content ] start -->
+                          <div class="row">
+
+
+                            <!-- [ Typography ] start -->
+                            {% if user.is_superuser or is_dgc == 1 %}
+                            <div  class="col-sm-12" >
+                                <div class="card" >
+                                    <div class="card-header" >
+                                        <!-- <h5>Bienvenue {%if is_dgc == 0 %} Administrateur {% endif%}{% if is_dgc == 1 %} Directeur {% endif%}</h5> -->
+                                    </div>
+                                    <div class="card-body">
+                                        <dl class="dl-horizontal row">
+                                           <dt class="col-sm-3" id="username">Nom d'utilisateur</dt>
+                                           <dd class="col-sm-9" id="username">{{username}}</dd><br>
+
+                                            <dt class="col-sm-3" id="first_name">Prénom</dt>
+                                            <dd class="col-sm-9" id="first_name">{{first_name}}</dd>
+
+                                            <dt class="col-sm-3" id="last_name">Nom de famille</dt>
+                                            <dd class="col-sm-9" id="last_name">{{last_name}}</dd>
+                                         </dl>
+
+
+                                         <button id="exclude" type="button" class="btn btn-success btn-sm" onclick="printJS({
+                                           printable: 'to_print',
+                                           type: 'html',
+                                           header:'<h1>Chez Paco Lotto</h1><p>13 Babiole 7 Turgeau, Port-Au-Prince <br>Phone: +509 2226 1040 / 4821 4355 <br>Email: chezpacolotto@gmail.com </p>',
+                                           targetStyles: ['*'],
+                                           ignoreElements:['exclude',],
+                                           })">Imprimer</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ Typography ] end -->
+                             {% else%}
+                             <div  class="col-sm-12" >
+                                 <div class="card" >
+                                     <div class="card-header" >
+
+                                         <h5>Bienvenue {{first_name}} {{last_name}}</h5>
+                                     </div>
+                                     <div class="card-body">
+                                         <dl class="dl-horizontal row">
+                                            <dt class="col-sm-3" id="username">Nom d'utilisateur</dt>
+                                            <dd class="col-sm-9" id="username">{{username}}</dd><br>
+
+                                             <dt class="col-sm-3" id="first_name">Prénom</dt>
+                                             <dd class="col-sm-9" id="first_name">{{first_name}}</dd>
+
+                                             <dt class="col-sm-3" id="last_name">Nom de famille</dt>
+                                             <dd class="col-sm-9" id="last_name">{{last_name}}</dd>
+
+
+                                          </dl>
+
+
+                                          <button id="exclude" type="button" class="btn btn-success btn-sm" onclick="printJS({
+                                            printable: 'to_print',
+                                            type: 'html',
+                                            header:'<h1>Chez Paco Lotto</h1><p>13 Babiole 7 Turgeau, Port-Au-Prince <br>Phone: +509 2226 1040 / 4821 4355 <br>Email: chezpacolotto@gmail.com </p>',
+
+                                            targetStyles: ['*'],
+                                            ignoreElements:['exclude',],
+                                            })">Imprimer</button>
+
+                                     </div>
+                                 </div>
+                             </div>
+                             <!-- [ Typography ] end -->
+                            {% endif%}
+
+                          </div>
+                          <!-- [ Main Content ] end -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- [ Main Content ] end -->
+
+{% endblock %}

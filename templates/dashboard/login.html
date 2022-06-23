@@ -1,0 +1,77 @@
+{% extends 'dashboard/partials/base.html' %}
+{% block title %}S'authenfier{% endblock %}
+
+{% block content_login %}
+
+{% load static %}
+<!-- [ Main Content ] start -->
+<div class="auth-wrapper">
+        <div class="auth-content">
+            <div class="auth-bg">
+                <span class="r"></span>
+                <span class="r s"></span>
+                <span class="r s"></span>
+                <span class="r"></span>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                      <a href="{%url 'index'%}" class="b-brand">
+
+                        <img class="img2" src="{% static 'assets/img/logo/pacolotto.png' %}"
+                            alt="Chez Paco Lotto" style="width:50%; max-width: 200px;" />
+
+                          <!-- <div class="b-bg">
+                              <i class="feather icon-trending-up"></i>
+                          </div> -->
+                          <!-- <span class="b-title">Chez Paco Lotto</span> -->
+
+                      </a>
+                        <!-- <i class="feather icon-unlock auth-icon"></i>  -->
+                    </div>
+
+                    <form class=""  method="POST">
+                      {% csrf_token %}
+                        <h3 class="mb-4">Veuillez-vous authentifier?</h3>
+
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="username" name="username" value="{{username}}" >
+                        </div>
+
+                        <div class="input-group mb-4">
+                            <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password" value="{{password}}" >
+                        </div>
+
+                        <div class="form-group text-left">
+                        <!-- <div class="checkbox checkbox-fill d-inline">
+                            <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="">
+                            <label for="checkbox-fill-a1" class="cr"> Save Details</label>
+                        </div>:  -->
+                        </div>
+                        <button type="submit" class="btn btn-primary shadow-2 mb-4">S'authentifier</button>
+                    </form>
+
+                        <div class="card-header" >
+                            {% if messages %} {% for message in messages %}
+                            <div class="alert alert-success" role="alert">
+                              <p class="text-danger mb-1">{{ message }}</p>
+                            </div>
+                              <hr>
+                            {% endfor %} {% endif %}
+                         </div>
+                         <dl class="dl-horizontal row">
+                           <dt class="col-sm-40">Accès réservé uniquement au staff !</dt>
+                        </dl>
+                        <!-- <p class="mb-2 text-muted">Accès réservé uniquement au staff de Chez Paco Lotto </p>  -->
+
+                      <!-- <p class="mb-2 text-muted">Forgot password? <a href="auth-reset-password.html">Reset</a></p>
+                      <p class="mb-0 text-muted">Don’t have an account? <a href="auth-signup.html">Signup</a></p>  -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- [ Main Content ] end -->
+
+{% endblock %}
