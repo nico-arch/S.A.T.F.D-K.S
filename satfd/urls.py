@@ -5,6 +5,7 @@ from . import views
 
 
 urlpatterns = [
+  path('', views.dashboard, name='index'),
 #Front-End home page
     path('', views.dashboard, name='dashboard-index'),
 #Dashboard login page
