@@ -89,7 +89,7 @@ def dashboard(request):
 
         return render(request, 'dashboard/index.html', data)
 
-    
+
     else:
         data = {
                 'username': user.username,
@@ -104,3 +104,41 @@ def dashboard(request):
 
     return render(request, 'dashboard/index.html', data)
     # return render(request, 'dashboard/index.html')
+
+#Afficher la page d'acceuil du tableau de bord
+#def dashboard_access_denied(request):
+#    return render(request, 'dashboard/access_denied.html')
+@custom_login_required()
+def error_403(request, exception):
+    return render(request,'dashboard/403.html')
+
+@custom_login_required()
+def dashboard_change_password(request):
+
+    if request.method == 'POST':
+        #Quelques tests
+        #Tester le type d'absences
+        if request.POST.get("password","") == "" or request.POST.get("newpassword","") == "":
+            messages.error(request, f'Veuiller remplir tous les champs.')
+            return render(request, 'dashboard/change_password.html')
+
+        if request.POST.get("password","") != request.POST.get("newpassword",""):
+            messages.error(request, f'Vous aviez tapé deux mots de passe différents.')
+            return render(request, 'dashboard/change_password.html')
+
+        if len(request.POST.get("password","")) < 8  or len(request.POST.get("newpassword","")) < 8:
+            messages.error(request, f'Le mot de passe doit comporter au moins 8 caractères.')
+            return render(request, 'dashboard/change_password.html')
+
+        if request.POST.get("password","") == request.POST.get("newpassword","") and int(len(request.POST.get("newpassword","")) >= 8):
+            #change le mot de passe de l'utilisateur
+            newpassword = request.POST.get("newpassword", "")
+            actual_user = request.user
+            actual_user.set_password(newpassword)
+            actual_user.save()
+            logout(request)
+            #Envoyer un message de succès et se redirectionne a la page d'affichage
+            messages.success(request, f"Mot de passe changé avec succès.")
+            return redirect('dashboard-login')
+
+    return render(request,'dashboard/change_password.html')

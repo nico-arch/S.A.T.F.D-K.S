@@ -11,7 +11,11 @@ urlpatterns = [
     path('login/', views.dashboard_login, name='dashboard-login'),
 #Dashboard logout page
     path('logout/', views.dashboard_logout, name='dashboard-logout'),
+#Dashboard home page
+    path('dashboard/change_password', views.dashboard_change_password, name='dashboard-change-password'),
 
+#Dashboard access-denied page
+    path('dashboard/access-denied', views.error_403, name='dashboard-access-denied'),
 
 
 
