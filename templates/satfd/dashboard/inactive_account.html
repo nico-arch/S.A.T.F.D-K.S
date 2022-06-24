@@ -1,4 +1,4 @@
-{% extends 'dashboard/partials/base.html' %}
+{% extends 'satfd/dashboard/partials/base.html' %}
 {% block title %}access denied page{% endblock %}
 
 {% block content %}
@@ -31,10 +31,10 @@
                                <div  class="col-sm-12">
                                    <div class="card">
                                      <div class="card-header" style="background-color:red">
-                                         <h3 style="color:white">Vous n'avez pas accès à cette page !</h3>
+                                         <h3 style="color:white">Votre compte a été desactivé.</h3>
                                      </div>
                                      <div class="card-body">
-                                       <a href="{{ request.META.HTTP_REFERER }}"  class="btn btn-primary btn-sm">Retour</a>
+                                       <a href="{% url 'dashboard-logout' %}"  class="btn btn-primary btn-sm">Retour</a>
                                      </div>
                                    </div>
                                </div>
