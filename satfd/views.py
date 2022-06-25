@@ -319,11 +319,18 @@ def dashboard_satfd_personne_afficher_details(request, personne_pk):
     form.fields['conjoint'].required = True
     form.fields['pere_cin_nif'].required = True
     form.fields['mere_cin_nif'].required = True
+    
+    
+    form.fields['telephone'].label = "Téléphone"    
+    form.fields['id_number'].label = "NIU"
+    form.fields['conjoint'].label = "NIU du/de la conjoint(e)"
+    form.fields['pere_cin_nif'].label = "NIU du père"
+    form.fields['mere_cin_nif'].label = "NIU de la mère"
 
     data = {
             'output': output,
             'header': "Personne details",
-            'title': f'Personne : NIU = { output.id_number }',
+            'title': f'{output.prenom} {output.nom}: NIU = { output.id_number }',
 
             'form':form,
             }
