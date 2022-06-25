@@ -139,14 +139,14 @@ class PersonneForm(forms.ModelForm):
         for key in self.fields:
             self.fields['prenom'].label = "Prénom"
             self.fields['naissance'].label = "Date de naissance"
-            self.fields['telephone'].label = "Téléphone"
+            self.fields['telephone'].label = "Téléphone (509-XXXX-XXXX)"
             self.fields['lieu_de_travail'].label = "Station/Lieu de travail"
-            self.fields['id_number'].label = "NIU"
+            self.fields['id_number'].label = "NIU (10 chiffres)"
             self.fields['id_plaque'].label = "Numéro de plaque(Moto)"
             self.fields['gilet_couleur'].label = "Couleur de gilet"
-            self.fields['conjoint'].label = "NIU du/de la conjoint(e)"
-            self.fields['pere_cin_nif'].label = "NIU du père"
-            self.fields['mere_cin_nif'].label = "NIU de la mère"
+            self.fields['conjoint'].label = "NIU du/de la conjoint(e) (10 chiffres)"
+            self.fields['pere_cin_nif'].label = "NIU du père (10 chiffres)"
+            self.fields['mere_cin_nif'].label = "NIU de la mère (10 chiffres)"
 
 
 
