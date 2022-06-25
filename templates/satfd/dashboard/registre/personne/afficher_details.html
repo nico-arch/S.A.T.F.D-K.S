@@ -1,0 +1,80 @@
+{% extends 'satfd/dashboard/partials/base.html' %}
+{% block title %}{{header}}{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<!-- [ Main Content ] start -->
+  <section class="pcoded-main-container" >
+      <div class="pcoded-wrapper">
+          <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                  <!-- [ breadcrumb ] start -->
+                  <div class="page-header">
+                      <div class="page-block">
+                          <div class="row align-items-center">
+                              <div class="col-md-12">
+
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- [ breadcrumb ] end -->
+                  <div class="main-body" id="to_print">
+                      <div class="page-wrapper">
+                          <!-- [ Main Content ] start -->
+                          <div class="row">
+
+
+                            <!-- [ Typography ] start -->
+
+
+                               <div  class="col-sm-12">
+                                 <div class="card">
+                                     <div class="card-header" style="background-color:#25A0DA ;">
+                                         <h3 style="color: white;">{{title}}</h3>
+                                     </div>
+                                       <div class="card-body">
+                                         <form>
+                                           {% for field in form %}
+                                           <dl class="dl-horizontal row">
+                                             {% if field.field.required %}
+                                             <dt class="col-sm-3">{{ field.label }}</dt>
+                                             <dd class="col-sm-9">{{ field.initial }}</dd>
+                                             {% endif%}
+                                          </dl>
+                                           {% endfor %}
+                                         </form>
+
+
+                                            <a href="{% url 'dashboard-satfd-personne-afficher' %}" id="exclude" class="btn btn-primary btn-sm">Retour</a>
+
+                                            <button id="exclude" type="button" class="btn btn-success btn-sm" onclick="printJS({
+                                              printable: 'to_print',
+                                              type: 'html',
+                                              header:'<h1>Solidarite ak ti fanmi Dessalines</h1><p>Adresse de l'entreprise <br>Phone: <br>Email: </p>',
+
+                                              targetStyles: ['*'],
+                                              ignoreElements:['exclude',],
+                                              })">Imprimer</button>
+                                       </div>
+                                   </div>
+                               </div>
+                               <!-- [ Typography ] end -->
+
+
+
+
+
+                          </div>
+                          <!-- [ Main Content ] end -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- [ Main Content ] end -->
+
+{% endblock %}

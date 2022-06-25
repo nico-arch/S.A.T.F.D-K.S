@@ -1,0 +1,78 @@
+{% extends 'satfd/dashboard/partials/base.html' %}
+{% block title %}{{header}} {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- [ Main Content ] start -->
+  <section class="pcoded-main-container">
+      <div class="pcoded-wrapper">
+          <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                  <!-- [ breadcrumb ] start -->
+                  <div class="page-header">
+                      <div class="page-block">
+                          <div class="row align-items-center">
+                              <div class="col-md-12">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- [ breadcrumb ] end -->
+                  <div class="main-body">
+
+                      <div class="page-wrapper">
+                          <!-- [ Main Content ] start -->
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header" style="background-color:#25A0DA ;">
+                                            <h3 style="color: white;">{{title}}</h3>
+                                        </div>
+                                        <div class="card-body">
+                                          {% if messages %} {% for message in messages %}
+                                          <div class="alert alert-warning" role="alert">
+                                            {{ message }}
+                                          </div>
+                                            <hr>
+                                          {% endfor %} {% endif %}
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                  <form method="POST">
+                                                    {% csrf_token %}
+
+                                                    <div class="form-group">
+                                                        {{ form }}
+                                                    </div>
+
+
+                                                        <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
+                                                        <a href="{% url 'dashboard-satfd-personne-afficher' %}"  class="btn btn-danger btn-sm">Annuler</a>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Input group -->
+
+                                </div>
+                            </div>
+
+
+
+                          <!-- [ Main Content ] end -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- [ Main Content ] end -->
+
+
+
+{% endblock %}

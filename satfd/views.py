@@ -105,6 +105,7 @@ def dashboard(request):
     return render(request, 'satfd/dashboard/index.html', data)
     # return render(request, 'dashboard/index.html')
 
+
 #Afficher la page d'acceuil du tableau de bord
 #def dashboard_access_denied(request):
 #    return render(request, 'dashboard/access_denied.html')
@@ -142,3 +143,222 @@ def dashboard_change_password(request):
             return redirect('dashboard-login')
 
     return render(request,'satfd/dashboard/change_password.html')
+
+#Section des Personne###########################################################
+#Afficher
+@custom_login_required()
+@check_permisions('satfd.Personne_voir')
+def dashboard_satfd_personne_afficher(request):
+    #Rechercher tous les references
+    output = Personne.objects.all().order_by('-date_created')
+
+    context = {
+        #'users': users,
+        'output': output,
+        'header':f"Liste des personnes adultes inscrites, quantité: {output.count()}",
+        'title': f'Liste des personnes adultes inscrites, quantité: {output.count()}',
+        'boutton_ajouter': "Inscrire une personne adulte",
+        }
+
+    return render(request, 'satfd/dashboard/registre/personne/afficher.html', context)
+
+
+
+#Ajouter
+@custom_login_required()
+@check_permisions('satfd.Personne_ajouter')
+def dashboard_satfd_personne_ajouter(request):
+  #Si l'utilisateur apuis sur le boutton ajouter
+  if request.method == 'POST':
+      form = PersonneForm(request.POST)
+
+
+
+      #data = {'form':form,}
+      #Si le formulaire transmis au system est valide
+      request.POST._mutable = True
+      request.POST['date_created'] = f"{datetime.now().strftime('%Y-%m-%d')}"
+      request.POST['created_by'] = f"{request.user.username}"
+      # request.POST['statut'] = "En cours"
+      # request.POST['date_modified'] = "-"
+      # request.POST['modified_by'] = "-"
+
+
+      if form.is_valid():
+          #Si le NUI du/de la conjoint(e) n'existe pas return une alerte
+          if len(str(form.cleaned_data['conjoint'])) == 10: #Si l'input n'est pas vide
+              if not Personne.objects.filter(id_number = form.cleaned_data['conjoint']).exists():
+
+                  data = {
+                  'form':form,
+                  'header':"Inscrire une personne",
+                  'title': f'Inscrire une personne',}
+                  messages.success(request, f"Conjoint(e): Aucune personne ayant ce NIU: {form.cleaned_data['conjoint']} existe dans le registe")
+                  return render(request, 'satfd/dashboard/registre/personne/ajouter.html', data)
+
+
+          #Si le NUI du père n'existe pas returne une alerte
+          if  len(str(form.cleaned_data['pere_cin_nif'])) == 10: #Si l'input n'est pas vide
+              if not Personne.objects.filter(id_number = form.cleaned_data['pere_cin_nif']).exists():
+
+                  data = {
+                  'form':form,
+                  'header':"Inscrire une personne adulte",
+                  'title': f'Inscrire une personne adulte',}
+                  messages.success(request, f"Père: Aucune personne ayant ce NIU: {form.cleaned_data['pere_cin_nif']} existe dans le registe")
+                  return render(request, 'satfd/dashboard/registre/personne/ajouter.html', data)
+
+          #Si le NUI de la mère n'existe pas returne une alerte
+          if len(str(form.cleaned_data['mere_cin_nif'])) == 10: #Si l'input n'est pas vide
+              if not Personne.objects.filter(id_number = form.cleaned_data['mere_cin_nif']).exists():
+
+                  data = {
+                  'form':form,
+                  'header':"Inscrire une personne",
+                  'title': f'Inscrire une personne',}
+                  messages.success(request, f"Mère: Aucune personne ayant ce NIU: {form.cleaned_data['mere_cin_nif']} existe dans le registe")
+                  return render(request, 'satfd/dashboard/registre/personne/ajouter.html', data)
+          form.save()
+          #Envoyer un message de succès et se redirectionne a la page d'affichage
+          messages.success(request, f"{form.cleaned_data['prenom']} {form.cleaned_data['nom']} a été inscrit avec succès")
+          # send_email_to_group( '', '', 2)
+          return redirect('dashboard-satfd-personne-afficher')
+
+      #Si le formulaire transmit au system n'est pas valide
+      else:
+          form = PersonneForm(request.POST)
+          data = {
+          'form':form,
+          'header':"Inscrire une personne adulte",
+          'title': f'Inscrire une personne adulte',}
+          return render(request, 'satfd/dashboard/registre/personne/ajouter.html', data)
+
+  return render(request, 'satfd/dashboard/registre/personne/ajouter.html',{'form':PersonneForm(),'header':"Inscrire une personne", 'title': f'Inscrire une personne',} )
+
+
+#Modifier
+@custom_login_required()
+@check_permisions('satfd.Personne_modifier')
+def dashboard_satfd_personne_modifier(request, personne_pk):
+    item = Personne.objects.get(id = personne_pk)
+    if request.method == 'POST':
+        form = PersonneForm(request.POST, instance=item)
+        request.POST._mutable = True
+        request.POST['date_modified'] = f"{datetime.now().strftime('%Y-%m-%d')}"
+        request.POST['modified_by'] = str(request.user.username)
+
+        if form.is_valid():
+            #Si le NUI du/de la conjoint(e) n'existe pas return une alerte
+            if len(str(form.cleaned_data['conjoint'])) == 10: #Si l'input n'est pas vide
+                if not Personne.objects.filter(id_number = form.cleaned_data['conjoint']).exists():
+
+                    data = {
+                    'form':form,
+                    'header':"Inscrire une personne adulte",
+                    'title': f'Inscrire une personne adulte',}
+                    messages.success(request, f"Conjoint(e): Aucune personne ayant ce NIU: {form.cleaned_data['conjoint']} existe dans le registe")
+                    return render(request, 'satfd/dashboard/registre/personne/ajouter.html', data)
+
+
+            #Si le NUI du père n'existe pas returne une alerte
+            if  len(str(form.cleaned_data['pere_cin_nif'])) == 10: #Si l'input n'est pas vide
+                if not Personne.objects.filter(id_number = form.cleaned_data['pere_cin_nif']).exists():
+
+                    data = {
+                    'form':form,
+                    'header':"Inscrire une personne adulte",
+                    'title': f'Inscrire une personne adulte',}
+                    messages.success(request, f"Père: Aucune personne ayant ce NIU: {form.cleaned_data['pere_cin_nif']} existe dans le registe")
+                    return render(request, 'satfd/dashboard/registre/personne/ajouter.html', data)
+
+            #Si le NUI de la mère n'existe pas returne une alerte
+            if len(str(form.cleaned_data['mere_cin_nif'])) == 10: #Si l'input n'est pas vide
+                if not Personne.objects.filter(id_number = form.cleaned_data['mere_cin_nif']).exists():
+
+                    data = {
+                    'form':form,
+                    'header':"Inscrire une personne adulte",
+                    'title': f'Inscrire une personne adulte',}
+                    messages.success(request, f"Mère: Aucune personne ayant ce NIU: {form.cleaned_data['mere_cin_nif']} existe dans le registe")
+                    return render(request, 'satfd/dashboard/registre/personne/ajouter.html', data)
+            form.save()
+            #Envoyer un message de succès et se redirectionne a la page d'affichage
+            messages.success(request, f"{form.cleaned_data['prenom']} {form.cleaned_data['nom']} a été modifier avec succès")
+            return redirect('dashboard-satfd-personne-afficher')
+        else:
+            form = PersonneForm(request.POST)
+            data = {
+            'form':form,
+            'header':"Modifier une personne adulte",
+            'title': f'Modifier une personne adulte:',
+            }
+            return render(request, 'satfd/dashboard/registre/personne/modifier.html', data)
+    else:
+        form = PersonneForm(instance=item)
+    context = {
+        'form': form,
+        'header':"Modifier une personne adulte",
+        'title': f'Modifier une personne adulte:',
+    }
+    return render(request, 'satfd/dashboard/registre/personne/modifier.html', context)
+
+
+#Afficher les details
+@custom_login_required()
+@check_permisions('satfd.Personne_voir_details')
+def dashboard_satfd_personne_afficher_details(request, personne_pk):
+    output = Personne.objects.get(pk = personne_pk)
+    form =  PersonneForm(request.POST, instance = output, initial={'gilet_couleur':output.gilet_couleur,
+                                                                  'lieu_de_travail':output.lieu_de_travail,
+                                                                  'sexe':output.sexe})
+    form.fields['naissance'].required = True
+    form.fields['email'].required = True
+    form.fields['lieu_de_travail'].required = True
+    form.fields['id_plaque'].required = True
+    form.fields['gilet_couleur'].required = True
+    form.fields['conjoint'].required = True
+    form.fields['pere_cin_nif'].required = True
+    form.fields['mere_cin_nif'].required = True
+
+    data = {
+            'output': output,
+            'header': "Personne details",
+            'title': f'Personne : NIU = { output.id_number }',
+
+            'form':form,
+            }
+    return render(request, 'satfd/dashboard/registre/personne/afficher_details.html', data)
+
+
+
+#Supprimer
+@custom_login_required()
+@check_permisions('satfd.Personne_supprimer')
+def dashboard_satfd_personne_suprimer(request, personne_pk ):
+    output = Personne.objects.get(pk = personne_pk)
+    form = PersonneForm(request.POST, instance = output, initial={'gilet_couleur':output.gilet_couleur,
+                                                                  'lieu_de_travail':output.lieu_de_travail,
+                                                                  'sexe':output.sexe})
+    form.fields['naissance'].required = True
+    form.fields['email'].required = True
+    form.fields['lieu_de_travail'].required = True
+    form.fields['id_plaque'].required = True
+    form.fields['gilet_couleur'].required = True
+    form.fields['conjoint'].required = True
+    form.fields['pere_cin_nif'].required = True
+    form.fields['mere_cin_nif'].required = True
+
+    data = {
+            'output': output,
+            'header': "Supprimer une Personne adulte",
+            'title': f'Voulez-vous supprimer {output.prenom} {output.nom}: NIU = {output.id_number} ?',
+            'form': form,
+            }
+
+    if request.method == 'POST':
+        output.delete()
+        #Envoyer un message de succès et se redirectionne a la page d'affichage
+        messages.success(request, f"{output.prenom} {output.nom}: NIU = {output.id_number} a été supprimer avec succès")
+        return redirect('dashboard-satfd-personne-afficher')
+
+    return render(request, 'satfd/dashboard/registre/personne/supprimer.html', data)

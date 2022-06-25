@@ -1,0 +1,103 @@
+{% extends 'satfd/dashboard/partials/base.html' %}
+{% block title %}{{header}}{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<!-- [ Main Content ] start -->
+  <section class="pcoded-main-container">
+      <div class="pcoded-wrapper">
+          <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                  <!-- [ breadcrumb ] start -->
+                  <div class="page-header">
+                      <div class="page-block">
+                          <div class="row align-items-center">
+                              <div class="col-md-12">
+
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- [ breadcrumb ] end -->
+                  <div class="main-body">
+                      <div class="page-wrapper">
+                          <!-- [ Main Content ] start -->
+                          <div class="row">
+
+
+                              <!-- [ Hover-table ] start -->
+                              <div class="col-xl-12">
+                                  <div class="card">
+                                      <div class="card-header" style="background-color:#25A0DA ;">
+                                          {% if messages %} {% for message in messages %}
+                                          <div class="alert alert-success" role="alert">
+                                            {{ message }}
+                                          </div>
+                                            <hr>
+                                          {% endfor %} {% endif %}
+
+                                          <h3 style="color:white">{{title}}</h3>
+
+                                       </div>
+                                       <span class="d-block m-t-10">
+                                        <h4 style="float: right;">
+                                          <a href="{% url 'dashboard-satfd-personne-ajouter' %}" class="btn btn-primary btn-sm">{{boutton_ajouter}}</a>
+                                        </h4>
+                                      </span>
+                                      <div class="card-block table-border-style">
+                                          <div class="table-responsive">
+                                              <table id= "myTable"  class="table table-hover">
+                                                  <thead>
+                                                    <tr>
+                                                      <th>Id</th>
+                                                        <th>Prénom</th>
+                                                        <th>Nom</th>
+                                                        <th>NIU</th>
+                                                        <th>Téléphone</th>
+                                                        <th>Actions</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                  {% for out in output %}
+                                                  <tr>
+                                                    <td>{{out.id}}</td>
+                                                    <td>{{out.prenom}}</td>
+                                                    <td>{{out.nom}}</td>
+                                                    <td>{{out.id_number}}</td>
+                                                    <td>{{out.telephone}}</td>
+                                                    <td>
+                                                        <a style="color:blue;" href="{% url 'dashboard-satfd-personne-afficher-details' out.id %}" class="feather icon-monitor afficher" title="Afficher"></a>&nbsp;&nbsp;&nbsp;
+
+
+                                                        <a style="color:rgb(245, 149, 6);" href="{% url 'dashboard-satfd-personne-modifier' out.id %}" class="feather icon-edit editer" title="Editer"></a>&nbsp;&nbsp;&nbsp;
+                                                        <a style="color:rgb(255, 0, 0);" href="{% url 'dashboard-satfd-personne-suprimer' out.id  %}" class="feather icon-x-circle desactiver" title="Supprimer"></a>
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                  {% endfor %}
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                              </div>
+                              <!-- [ Hover-table ] end -->
+
+
+                          </div>
+                          <!-- [ Main Content ] end -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- [ Main Content ] end -->
+
+{% endblock %}

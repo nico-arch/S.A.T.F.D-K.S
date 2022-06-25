@@ -6,7 +6,7 @@
             <a href="{%url 'dashboard-index'%}" class="b-brand">
 
 							<img class="img2" src="{% static 'assets/img/logo/SATFD.png' %}"
-                  alt="SATFD" style="width:100%; max-width: 130px" />
+                  alt="Logo" style="width:100%; max-width: 130px" />
 
                 <!-- <div class="b-bg">
                     <i class="feather icon-trending-up"></i>
@@ -35,13 +35,26 @@
 				<li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon">
 					<i class="feather icon-folder"></i>
-					</span><span class="pcoded-mtext">Registre</span></a>
+					</span><span class="pcoded-mtext">S.A.T.F.D </span></a>
                     <ul class="pcoded-submenu">
-											
-											<li class=""><a href="#" class="">Personnes</a></li>
+
+											<li class=""><a href="{% url 'dashboard-satfd-personne-afficher' %}" class="">Registre des adultes</a></li>
+											<li class=""><a href="#" class="">Registre des mineurs</a></li>
 
                     </ul>
           </li>
+
+					<li data-username="" class="nav-item pcoded-hasmenu">
+	                    <a href="javascript:" class="nav-link "><span class="pcoded-micon">
+						<i class="feather icon-folder"></i>
+						</span><span class="pcoded-mtext">K.S</span></a>
+	                    <ul class="pcoded-submenu">
+
+												<li class=""><a href="#" class="">Section des Paiements</a></li>
+												<li class=""><a href="#" class="">Section des Dettes</a></li>
+
+	                    </ul>
+	          </li>
 
 
 								{% if user.is_superuser %}
