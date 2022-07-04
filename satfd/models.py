@@ -643,7 +643,7 @@ class Medecin(models.Model):
 
     def __str__(self):
         return '{0}'.format((self.prenom+' '+self.nom+' '+self.id_number))
-class Consulation(models.Model):
+class Consultation(models.Model):
     id = models.AutoField(primary_key = True)
     personne_inscrite = models.ForeignKey( Personne ,
                                       on_delete=models.SET_NULL,
@@ -669,14 +669,14 @@ class Consulation(models.Model):
     modified_by= models.CharField(max_length=500, null =True)
     class Meta:
         ordering = ('date_created',)
-        permissions = ( ("Consulation_voir", "SATFD: voir"),
-                        ("Consulation_voir_inactif", "SATFD: voir inactif"),
-                        ("Consulation_voir_details", "SATFD: voir details"),
-                        ("Consulation_ajouter", "SATFD: ajouter"),
-                        ("Consulation_modifier", "SATFD: modifier"),
-                        ("Consulation_activer", "SATFD: activer"),
-                        ("Consulation_desactiver", "SATFD: desactiver"),
-                        ("Consulation_supprimer", "SATFD: supprimer"),
+        permissions = ( ("Consultation_voir", "SATFD: voir"),
+                        ("Consultation_voir_inactif", "SATFD: voir inactif"),
+                        ("Consultation_voir_details", "SATFD: voir details"),
+                        ("Consultation_ajouter", "SATFD: ajouter"),
+                        ("Consultation_modifier", "SATFD: modifier"),
+                        ("Consultation_activer", "SATFD: activer"),
+                        ("Consultation_desactiver", "SATFD: desactiver"),
+                        ("Consultation_supprimer", "SATFD: supprimer"),
         )
     def __str__(self):
         return '{0}'.format("Nom: "+self.personne_inscrite+" Montant: "+self.montant+"Date: "+self.date_created)
